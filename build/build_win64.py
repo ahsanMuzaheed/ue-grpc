@@ -67,15 +67,19 @@ def create_build_prj():
     subprocess.call(cmd_build_libs)
 
 def copy_library_win64():
+    current_path = os.path.realpath(__file__)
+    dir_name = os.path.dirname(current_path)
+    print("copy_library_win64 current_path: " +dir_name)
+    os.chdir(dir_name)
     abs_path = os.path.abspath("../")
     print("copy_library_win64: " +abs_path)
     grpc_path = os.path.abspath("../../")
     print("copy_library_win64 grpc: " +grpc_path)
-    if(os.path.exists(grpc_path + "/Plugins/GRPC/Source/ThirdParty/Win64/")):
-        shutil.rmtree(grpc_path + "/Plugins/GRPC/Source/ThirdParty/Win64/", True)
+    if(os.path.exists(abs_path + "/Plugins/GRPC/Source/ThirdParty/Win64/")):
+        shutil.rmtree(abs_path + "/Plugins/GRPC/Source/ThirdParty/Win64/", True)
     
-    shutil.copytree(grpc_path + "/grpc-source-win/Release/", grpc_path + "/Plugins/GRPC/Source/ThirdParty/Win64/")
-    shutil.copytree(grpc_path + "/grpc-source-win/include/", grpc_path + "/Plugins/GRPC/Source/ThirdParty/Win64/include")
+    shutil.copytree(abs_path + "/grpc-source-win/Release/", abs_path + "/Plugins/GRPC/Source/ThirdParty/Win64/")
+    shutil.copytree(abs_path + "/grpc-source-win/include/", abs_path + "/Plugins/GRPC/Source/ThirdParty/Win64/include")
     
     return 0
     
@@ -87,9 +91,9 @@ if os.path.exists(vs_intermediate):
 os.mkdir(vs_intermediate)
 os.chdir(vs_intermediate)
 
-#clone_grpc_win()
+clone_grpc_win()
 #create vs project files
-#create_build_prj()
+create_build_prj()
 
 #build vs project 
 copy_library_win64()

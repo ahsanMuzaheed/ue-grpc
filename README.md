@@ -16,6 +16,8 @@ Make sure you have those dependencies installed for Windows:
 
 https://github.com/grpc/grpc/blob/master/INSTALL.md
 
+Also you should install Python 3>
+
 To build for Linux, you need to build Windows binaries first. 
 As a Linux Build depends on some generated code, which can only be generated when protoc is present.
 
