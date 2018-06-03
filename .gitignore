@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+grpc-source-linux/
+grpc-source-win/
+build/__pycache__/
+build/_clang_tmp/
+build/_vs_tmp/
+grpc/
+Plugins/GRPC/ThirdParty/
