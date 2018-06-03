@@ -11,13 +11,16 @@ prefix_path         = "_prefix"
 #path to unreal source root folder, against which grpc will be build
 
 def clone_grpc_win():
-    abs_path = os.path.abspath("../..")
+    current_path = os.path.realpath(__file__)
+    dir_name = os.path.dirname(current_path)
+    os.chdir(dir_name)
+    abs_path = os.path.abspath("../")
     print("clone_grpc abs_path: " +abs_path)
     print("clone_grpc abs_path: " +abs_path+"\\grpc-source-win")
     
 
-    if os.path.exists("../../grpc-source-win"):
-        shutil.rmtree("../../grpc-source-win", True)
+    if os.path.exists("../grpc-source-win"):
+        shutil.rmtree("../grpc-source-win", True)
         os.rmdir(abs_path+"\\grpc-source-win")
     
     os.chdir(abs_path)
@@ -28,7 +31,7 @@ def clone_grpc_win():
     os.chdir(abs_path+"/grpc-source-win")
     subprocess.call(cmd_checkout)
     
-    os.chdir(abs_path+"/build")
+    os.chdir(dir_name)
 
 def create_build_prj():
     abs_path = os.path.abspath("../grpc-source-win")
@@ -66,6 +69,9 @@ def create_build_prj():
     cmd_build_libs = [msbuild, "grpc.sln"]
     subprocess.call(cmd_build_libs)
 
+    current_path = os.path.realpath(__file__)
+    dir_name = os.path.dirname(current_path)
+
 def copy_library_win64():
     current_path = os.path.realpath(__file__)
     dir_name = os.path.dirname(current_path)
@@ -73,8 +79,7 @@ def copy_library_win64():
     os.chdir(dir_name)
     abs_path = os.path.abspath("../")
     print("copy_library_win64: " +abs_path)
-    grpc_path = os.path.abspath("../../")
-    print("copy_library_win64 grpc: " +grpc_path)
+    
     if(os.path.exists(abs_path + "/Plugins/GRPC/Source/ThirdParty/Win64/")):
         shutil.rmtree(abs_path + "/Plugins/GRPC/Source/ThirdParty/Win64/", True)
     
@@ -86,10 +91,7 @@ def copy_library_win64():
 ##################################################
 
 #create intermediate path
-if os.path.exists(vs_intermediate):
-    shutil.rmtree(vs_intermediate, True)
-os.mkdir(vs_intermediate)
-os.chdir(vs_intermediate)
+
 
 clone_grpc_win()
 #create vs project files

@@ -353,13 +353,15 @@ def copy_to_plugin():
     copy_libs_to_plugin(library_path, lib_grpc_cpp_unsecure_file)
     copy_libs_to_plugin(library_path, lib_protobuf_file)
     copy_libs_to_plugin(library_path, lib_cares_file)
+    current_path = os.path.realpath(__file__)
+    dir_name = os.path.dirname(current_path)
+    print("copy_library_win64 current_path: " +dir_name)
+    os.chdir(dir_name)
     abs_path = os.path.abspath("../")
     print("copy_library_win64: " +abs_path)
-    grpc_path = os.path.abspath("../../")
-    print("copy_library_win64 grpc: " +grpc_path)
-    if(os.path.exists(grpc_path + "/Plugins/GRPC/Source/ThirdParty/x86_64-unknown-linux-gnu/include")):
-        shutil.rmtree(grpc_path + "/Plugins/GRPC/Source/ThirdParty/x86_64-unknown-linux-gnu/include", True)
-    shutil.copytree(grpc_path + "/grpc-source-win/include/", grpc_path + "/Plugins/GRPC/Source/ThirdParty/x86_64-unknown-linux-gnu/include")
+    if(os.path.exists(abs_path + "/Plugins/GRPC/Source/ThirdParty/x86_64-unknown-linux-gnu/include")):
+        shutil.rmtree(abs_path + "/Plugins/GRPC/Source/ThirdParty/x86_64-unknown-linux-gnu/include", True)
+    shutil.copytree(abs_path + "/grpc-source-win/include/", abs_path + "/Plugins/GRPC/Source/ThirdParty/x86_64-unknown-linux-gnu/include")
 
 ##################################################
 clone_grpc_linux()
